@@ -18,7 +18,7 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is RegisterLoaded) {
           isLoading = true;
@@ -30,111 +30,113 @@ class SignUpScreen extends StatelessWidget {
            isLoading = false;
         }
       },
-     child: ModalProgressHUD(
-       inAsyncCall: isLoading,
-       child: Scaffold(
-         backgroundColor: kPrimaryColor,
-         body: Padding(
-           padding: const EdgeInsets.symmetric(horizontal: 8),
-           child: Form(
-             key: _formKey,
-             child: ListView(
-               children: [
-                 const SizedBox(
-                   height: 75,
-                 ),
-                 const Row(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   children: [
-                     Text(
-                       'BMI Tracker App',
-                       style: TextStyle(
-                         fontSize: 24,
-                         color: Colors.white,
-                         fontWeight: FontWeight.bold,
-                         fontFamily: 'Pacifico',
-                       ),
-                     ),
-                   ],
-                 ),
-                 const SizedBox(
-                   height: 75,
-                 ),
-                 const Row(
-                   children: [
-                     Text(
-                       'Sign Up',
-                       style: TextStyle(
-                         fontSize: 18,
-                         color: Colors.white,
-                         fontWeight: FontWeight.bold,
-                         //  fontFamily: 'Pacifico',
-                       ),
-                     ),
-                   ],
-                 ),
-                 const SizedBox(
-                   height: 20,
-                 ),
-                 CustomTextFormField(
-                   onChanged: (data) {
-                     email = data;
-                   },
-                   text: 'Enter your e-mail',
-                   icon: Icons.email,
-                 ),
-                 const SizedBox(
-                   height: 20,
-                 ),
-                 CustomTextFormField(
-                   obSecureText: true,
-                   onChanged: (data) {
-                     password = data;
-                   },
-                   text: 'Enter your password',
-                   icon: Icons.lock,
-                 ),
-                 const SizedBox(
-                   height: 20,
-                 ),
-                 CustomButton(
-                   textButton: 'Sign Up',
-                   onPressed: () async {
-                     {
-                       if (_formKey.currentState!.validate()) {
-                         BlocProvider.of<AuthBloc>(context).add(RegisterEvent(email: email!, password: password!));
-                       } else {}
-                     }
-                   },
-                 ),
-                 Row(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   children: [
-                     const Text(
-                       'already have an account',
-                       style: TextStyle(color: Colors.white),
-                     ),
-                     TextButton(
-                       onPressed: () {
-                         Navigator.pop(context);
-                       },
-                       child: const Text(
-                         'Sign In',
-                         style: TextStyle(
-                           color: Color(0xffC7EDE6),
-                         ),
-                       ),
-                     )
-                   ],
-                 ),
+      builder: (context, state) {
+        return ModalProgressHUD(
+          inAsyncCall: isLoading,
+          child: Scaffold(
+            backgroundColor: kPrimaryColor,
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Form(
+                key: _formKey,
+                child: ListView(
+                  children: [
+                    const SizedBox(
+                      height: 75,
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'BMI Tracker App',
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Pacifico',
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 75,
+                    ),
+                    const Row(
+                      children: [
+                        Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            //  fontFamily: 'Pacifico',
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CustomTextFormField(
+                      onChanged: (data) {
+                        email = data;
+                      },
+                      text: 'Enter your e-mail',
+                      icon: Icons.email,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CustomTextFormField(
+                      obSecureText: true,
+                      onChanged: (data) {
+                        password = data;
+                      },
+                      text: 'Enter your password',
+                      icon: Icons.lock,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CustomButton(
+                      textButton: 'Sign Up',
+                      onPressed: () async {
+                        {
+                          if (_formKey.currentState!.validate()) {
+                            BlocProvider.of<AuthBloc>(context).add(RegisterEvent(email: email!, password: password!));
+                          } else {}
+                        }
+                      },
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'already have an account',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text(
+                            'Sign In',
+                            style: TextStyle(
+                              color: Color(0xffC7EDE6),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
 
 
-               ],
-             ),
-           ),
-         ),
-       ),
-     ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

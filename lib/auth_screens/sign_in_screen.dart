@@ -21,7 +21,7 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is LoginLoading) {
           isLoading = true;
@@ -33,7 +33,7 @@ class SignInScreen extends StatelessWidget {
           isLoading = false ;
         }
       },
-      child:ModalProgressHUD(
+      builder: (context , state) => ModalProgressHUD(
         inAsyncCall: isLoading,
         child: Scaffold(
           backgroundColor: kPrimaryColor,
